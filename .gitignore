@@ -1,0 +1,14 @@
+#ignore the files related to my eclipse configuration
+
+*.project
+*.cproject
+*.prefs
+depend-inf224_tp1
+################################################################################
+#ignore the temporary files created during compilation
+
+*.[oa]
+*.exe
+################################################################################
+#ignore the documentation that can be generated running doxyfile
+documentation/*
