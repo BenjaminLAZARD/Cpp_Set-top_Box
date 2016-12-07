@@ -16,7 +16,7 @@
  */
 
 #include "Mediaobject.h"
-//!<//using namespace std; //don't know if there is a redundancy with the namespace of the header file.
+/*! using namespace std; //don't know if there is a redundancy with the namespace of the header file. */
 
 
 //2 types of constructors

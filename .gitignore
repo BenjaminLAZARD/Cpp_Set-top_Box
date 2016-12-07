@@ -12,3 +12,4 @@ depend-inf224_tp1
 ################################################################################
 #ignore the documentation that can be generated running doxyfile
 documentation/*
+/Debug/

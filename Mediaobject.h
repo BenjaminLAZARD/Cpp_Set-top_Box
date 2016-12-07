@@ -5,9 +5,13 @@
  * \date   6 déc. 2016
  */
 /*!
- * \fn void printMediumData(ostream& stream)
+ * \fn virtual void printMediumData(ostream& stream) const
  * \brief Print basic properties of a medium, such as complete name and type.
  * \param stream : the output where to display the information.
+ */
+/*!
+ * \fn virtual void play() const =0
+ * \brief Unix command that plays the medium depending on its type.
  */
 
 #ifndef MEDIAOBJECT_H_
@@ -20,7 +24,7 @@
 using namespace std;
 
 class Media_object {
-private:
+protected://acessible to sub-classes
 	string medium_type;
 	string absolute_path;
 
@@ -36,6 +40,8 @@ public:
 	virtual void setMediumType(const string mediumType);	// not a const function since it modifies instance attributes
 
 	virtual void printMediumData(ostream& stream) const;
+
+	virtual void play() const =0;
 };
 
 #endif /* MEDIAOBJECT_H_ */
