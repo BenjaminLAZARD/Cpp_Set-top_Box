@@ -1,10 +1,10 @@
 /*!
- * \file   Video.h
+ * \file
  * \brief  Class extending media objects. The name is self-explanatory
  * \author Benjamin LAZARD
  * \date   7 déc. 2016
  *
- * This class is so simple, it does not even require .cpp file.
+ * This class is so simple, it does not even require a .cpp file.
  */
 
 #ifndef VIDEO_H_
@@ -18,24 +18,31 @@
 //So as to make strings and console_out directly accessible.
 using namespace std;
 
+extern string VIDEO_MEDIUM_TYPE;//!< Value defined in global_constants.cpp ( should be "video")
+
 class Video : public Media_object {
-private:
+protected:
 	float duration;
 
 public:
-	Video(const string medium_type = "", const string absolute_path = "", float duration = 0) :
-		Media_object(medium_type, absolute_path), duration(duration){}
-	virtual ~Video(){}//!<since there is no .cpp file, it needs to be implemented here.
+	Video(const string absolute_path = "", float duration = 0) :
+		Media_object(VIDEO_MEDIUM_TYPE, absolute_path), duration(duration) {}
+	~Video(){}//!<since there is no .cpp file, it needs to be implemented here.
 
-	virtual float getDuration() const {return duration;}
-	virtual void setDuration(const float duration) {this->duration = duration;}
+	virtual float getDuration() const final {return duration;}
+	virtual void setDuration(const float duration) final {this->duration = duration;}
 
-	virtual void printMediumData(ostream& stream) const override {
+	void printMediumData(ostream& stream) const override {
 		stream << "Medium type: " << medium_type << "\n"
-			   << "Absolute path: " << absolute_path << "\n"
-			   << "Duration: " << duration << "\n"
-			   << endl;
+		<< "Absolute path: " << absolute_path << "\n"
+		<< "Duration: " << duration << "\n"
+		<< endl;
 	}
+
+	/*!
+	 * \brief Unix command that plays the medium depending on its type.
+	 * calls Linux mpv reader to play the video.
+	 */
 	virtual void play() const override{
 			string system_arg = "mpv " + absolute_path + " &";
 			system(system_arg.c_str());

@@ -14,7 +14,7 @@ PROG = inf224_tp1
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = Mediaobject.cpp Main.cpp
+SOURCES = Mediaobject.cpp Main.cpp global_constants.cpp Movie.cpp
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)
@@ -25,7 +25,6 @@ OBJETS = ${SOURCES:%.cpp=%.o}
 # Compilateur C++
 #
 CXX = c++
-
 #
 # Options du compilateur C++
 #   -g pour debugger, -O optimise, -Wall affiche les erreurs, -I pour les headers

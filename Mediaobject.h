@@ -1,5 +1,5 @@
 /*!
- * \file   Mediaobject.h
+ * \file
  * \brief  Abstract object the properties of which are shared by all media.
  * \author Benjamin LAZARD
  * \date   6 déc. 2016
@@ -10,8 +10,8 @@
  * \param stream : the output where to display the information.
  */
 /*!
- * \fn virtual void play() const =0
- * \brief Unix command that plays the medium depending on its type.
+ * \class Media_object
+ * \brief Print basic properties of a medium, such as complete name and type.
  */
 
 #ifndef MEDIAOBJECT_H_
@@ -34,13 +34,16 @@ public:
 
 	virtual ~Media_object();
 
-	virtual string getMediumType() const;
-	virtual string getAbsolutePath() const;
-	virtual void setAbsolutePath(const string absolutePath); // not a const function since it modifies instance attributes
-	virtual void setMediumType(const string mediumType);	// not a const function since it modifies instance attributes
+	virtual string getMediumType() const final;
+	virtual string getAbsolutePath() const final;
+	virtual void setAbsolutePath(const string absolutePath) final; // not a const function since it modifies instance attributes
+	virtual void setMediumType(const string mediumType) final;	// not a const function since it modifies instance attributes
 
 	virtual void printMediumData(ostream& stream) const;
 
+	/*!
+	 * \brief Unix command that plays the medium depending on its type.
+	 */
 	virtual void play() const =0;
 };
 

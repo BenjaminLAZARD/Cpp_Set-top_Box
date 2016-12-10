@@ -1,18 +1,23 @@
 /*!
-  \file   Mediaobject.cpp
+  \file
   \brief  Abstract object the properties of which are shared by all media.
   \author Benjamin LAZARD
   \date   6 déc. 2016
  */
 /*!
-  \fn Media_object()
+  \fn Media_object::Media_object()
   \brief basic constructor which initializes empty properties.
  */
 /*!
-  \fn  Media_object(string medium_type, string absolute_path)
+  \fn  Media_object::Media_object(string medium_type, string absolute_path)
   \brief elaborated constructor which initializes basic properties.
   \param path : absolute path including name of the file and extension.
   \param type : type of medium, inferred from medium extension.
+ */
+/*!
+ * \fn void Media_object::printMediumData(ostream& stream) const
+ * \param stream The output where to print
+ * \brief specifies all the existing properties of the object (name, and value).
  */
 
 #include "Mediaobject.h"
