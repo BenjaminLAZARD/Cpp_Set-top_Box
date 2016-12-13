@@ -2,7 +2,7 @@
  * \file
  * \brief  Class extending media objects. The name is self-explanatory
  * \author Benjamin LAZARD
- * \date   7 déc. 2016
+ * \date   7 dÃ©c. 2016
  *
  * This class is so simple, it does not even require a .cpp file.
  */
@@ -18,22 +18,22 @@
 //So as to make strings and console_out directly accessible.
 using namespace std;
 
-extern string VIDEO_MEDIUM_TYPE;//!< Value defined in global_constants.cpp ( should be "video")
+//extern string VIDEO_MEDIUM_TYPE;//!< Value defined in global_constants.cpp ( should be "video")
 
 class Video : public Media_object {
 protected:
 	float duration;
 
 public:
-	Video(const string absolute_path = "", float duration = 0) :
-		Media_object(VIDEO_MEDIUM_TYPE, absolute_path), duration(duration) {}
+	Video(const string name="", const string absolute_path = "", float duration = 0) :
+		Media_object(name, absolute_path), duration(duration) {}
 	~Video(){}//!<since there is no .cpp file, it needs to be implemented here.
 
 	virtual float getDuration() const final {return duration;}
-	virtual void setDuration(const float duration) final {this->duration = duration;}
+	virtual void setDuration(float duration) final {this->duration = duration;}
 
 	void printMediumData(ostream& stream) const override {
-		stream << "Medium type: " << medium_type << "\n"
+		stream << "Name: " << name << "\n"
 		<< "Absolute path: " << absolute_path << "\n"
 		<< "Duration: " << duration << "\n"
 		<< endl;

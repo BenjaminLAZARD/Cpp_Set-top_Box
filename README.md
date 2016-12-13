@@ -2,11 +2,11 @@
 INF224 course: programming paradigms 2016-2017.
 It is a home-made multimedia set-top box software, entirely in C++.
 
-##Content of the github
+## Content of the github
 Online hub only contains source files required to make executables.
 GitIgnored is commented if you whish to know which files are skipped.
 
-##Good to know
+## Good to know
 User must have a C++ compiler as g++ and run the **Makefile**.
 Documentation will be obtained running **Doxyfile**.
 

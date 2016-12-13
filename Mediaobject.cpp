@@ -2,7 +2,7 @@
   \file
   \brief  Abstract object the properties of which are shared by all media.
   \author Benjamin LAZARD
-  \date   6 déc. 2016
+  \date   6 dï¿½c. 2016
  */
 /*!
   \fn Media_object::Media_object()
@@ -26,11 +26,11 @@
 
 //2 types of constructors
 Media_object::Media_object() {
-	medium_type = "";
+	name = "";
 	absolute_path = "";
 }
-Media_object::Media_object(const string medium_type, const string absolute_path) {
-	this->medium_type = medium_type;
+Media_object::Media_object(const string name, const string absolute_path) {
+	this->name = name;
 	this->absolute_path = absolute_path;
 }
 
@@ -38,12 +38,12 @@ Media_object::Media_object(const string medium_type, const string absolute_path)
 Media_object::~Media_object() {}
 
 //getters and setters
-string Media_object::getMediumType() const {return medium_type;}
+string Media_object::getName() const {return name;}
 string Media_object::getAbsolutePath() const {return absolute_path;}
 void Media_object::setAbsolutePath(const string absolutePath) {this->absolute_path = absolutePath;}
-void Media_object::setMediumType(const string mediumType) {this->medium_type = mediumType;}
+void Media_object::setName(const string name) {this->name = name;}
 
 //other functions
 void Media_object::printMediumData(ostream& stream) const {
-	stream << "Medium type: " << medium_type << "\n" << "Absolute path: " << absolute_path << "\n" << endl;
+	stream << "Name: " << name << "\n" << "Absolute path: " << absolute_path << "\n" << endl;
 }

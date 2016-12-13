@@ -2,7 +2,7 @@
  * \file
  * \brief  Class extending media objects. The name is self-explanatory
  * \author Benjamin LAZARD
- * \date   7 déc. 2016
+ * \date   7 dï¿½c. 2016
  *
  * This class is so simple, it does not even require .cpp file.
  */
@@ -22,7 +22,7 @@
 //So as to make strings and console_out directly accessible.
 using namespace std;
 
-extern string PICTURE_MEDIUM_TYPE;//!< Value defined in global_constants.cpp ( should be "picture")
+//extern string PICTURE_MEDIUM_TYPE;//!< Value defined in global_constants.cpp ( should be "picture")
 
 class Picture : public Media_object {
 private:
@@ -30,17 +30,17 @@ private:
 	float height;
 
 public:
-	Picture(const string absolute_path= "", float width = 0, float height = 0) :
-		Media_object(PICTURE_MEDIUM_TYPE, absolute_path), width(width), height(height) {}
+	Picture(const string name, const string absolute_path= "", float width = 0, float height = 0) :
+		Media_object(name, absolute_path), width(width), height(height) {}
 	~Picture(){}//!<since there is no .cpp file, it needs to be implemented here.
 
 	virtual float getWidth() const final{return width;}
-	virtual void setWidth(const float width) final {this->width = width;}
+	virtual void setWidth(float width) final {this->width = width;}
 	virtual float getHeight() const final {return height;}
-	virtual void setHeight(const float height)final {this->height = height;}
+	virtual void setHeight(float height)final {this->height = height;}
 
 	void printMediumData(ostream& stream) const override {
-		stream << "Medium type: " << medium_type << "\n"
+		stream << "Name: " << name << "\n"
 	    << "Absolute path: " << absolute_path << "\n"
 	    << "Width: " << width << "\n"
 	    << "Height: " << height << "\n"

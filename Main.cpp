@@ -2,7 +2,7 @@
  * \file
  * \brief  Merely a test file.
  * \author Benjamin LAZARD
- * \date   6 déc. 2016
+ * \date   6 dÃ©c. 2016
  */
 
 #include "Video.h"
@@ -21,12 +21,12 @@ void test_step1_2(){
 	delete video;
 	video = nullptr;
 
-	video = new Video("C:/in/the/middle/of/nowhere/video.mp4", 32.5);
+	video = new Video("video1", "C:/in/the/middle/of/nowhere/video.mp4", 32.5);
 	video->setDuration(6);
-	video->setAbsolutePath("and weirder");
+	video->setAbsolutePath("HDD");
 	video->printMediumData(cout);
 
-	Picture* picture = new Picture("C:/in/the/middle/of/nowhere/image.png", 16, 9);
+	Picture* picture = new Picture("picture1", "C:/in/the/middle/of/nowhere/image.png", 16, 9);
 	picture->printMediumData(cout);
 
 	delete video; delete picture; video = nullptr; picture = nullptr;
@@ -36,8 +36,8 @@ void test_step1_2(){
 void test_step3_4() {
 	int n = 2;
 	Media_object** playlist = new Media_object* [n]{
-		new Video("here", 3),
-		new Picture("there", 16, 9),
+		new Video("something", "here", 3),
+		new Picture("some other thing", "there", 16, 9),
 	};
 
 	/*!
@@ -60,7 +60,7 @@ void test_step3_4() {
 void test_step5_6_7() {
 	int n = 4;
 	int markers[n] = {2, 5, 10, 15};
-	Movie* movie = new Movie("path",777, markers, n);
+	Movie* movie = new Movie("movie1", "path",777, markers, n);
 
 	//Testing my arithmetics to measure markers length:
 //	cout << "size of markers = " << sizeof(markers) << "; size of markers[0] = " << sizeof(*markers)
@@ -86,31 +86,34 @@ void test_step5_6_7() {
 	movie->printMarkers(cout);
 
 	cout << "encapsulation test 2, the markers output should be unchanged" <<endl;
-	int * markers2 = movie->getMarkers();
-	*markers2 = 100100010;
+	//const int * markers2 = movie->getMarkers();//cannot be modified
 	movie->printMarkers(cout);
 
 
-	//Let us try different copies of movie, and check they are independant from the original.
+	//Let us try different copies of movie, and check they are independent from the original.
 	cout << "encapsulation test 3, the markers output should be unchanged" <<endl;
 	markers[0] = 2;
 	movie->setMarkers(markers, n);
-	Movie* movie_le_retour = movie;
-	markers[3] = 710010001;
+	Movie movie_le_retour = *movie;//notice that we work with movie objects here and not with movie* pointers.
+	//movie_le_retour.printMarkers(cout); //this one is correctly printed (you can check)
+	markers[2] = 71;
 	movie->setMarkers(markers, n);
-	movie_le_retour->printMarkers(cout);
+	//movie->printMarkers(cout);
+	movie_le_retour.printMarkers(cout);
 
+	//same thing as before, but trying to initialize the new object with constructor definition.
 	cout << "encapsulation test 4, the markers output should be unchanged" <<endl;
-	markers[3] = 15;
+	markers[2] = 10;
 	movie->setMarkers(markers, n);
-	Movie* movie_epilogue(movie);
-	//movie_epilogue->printMarkers(cout);
+	Movie movie_epilogue(*movie);
+	movie_epilogue.printMarkers(cout);
 	markers[3] = 100100010;
 	movie->setMarkers(markers, n);
-	movie_epilogue->printMarkers(cout);
+	movie_epilogue.printMarkers(cout);
 
-	delete movie; movie = nullptr; delete markers2; markers2 = nullptr;
-	//no need to delete markers since it is in the heap, and therefore destroyed at the end of the function
+	delete movie; movie = nullptr;
+	//delete[] markers2; markers2 = nullptr;
+	//no need to delete markers or the other movies since it is in the heap, and therefore destroyed at the end of the function
 }
 
 /*!
@@ -123,4 +126,3 @@ int main() {
 	//test_step3_4();
 	test_step5_6_7();
 }
-

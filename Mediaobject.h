@@ -2,7 +2,7 @@
  * \file
  * \brief  Abstract object the properties of which are shared by all media.
  * \author Benjamin LAZARD
- * \date   6 déc. 2016
+ * \date   6 dï¿½c. 2016
  */
 /*!
  * \fn virtual void printMediumData(ostream& stream) const
@@ -25,19 +25,19 @@ using namespace std;
 
 class Media_object {
 protected://acessible to sub-classes
-	string medium_type;
+	string name;
 	string absolute_path;
 
 public:
 	Media_object();
-	Media_object(const string medium_type, const string absolute_path);
+	Media_object(const string name, const string absolute_path);
 
 	virtual ~Media_object();
 
-	virtual string getMediumType() const final;
+	virtual string getName() const final;
 	virtual string getAbsolutePath() const final;
 	virtual void setAbsolutePath(const string absolutePath) final; // not a const function since it modifies instance attributes
-	virtual void setMediumType(const string mediumType) final;	// not a const function since it modifies instance attributes
+	virtual void setName(const string name) final;	// not a const function since it modifies instance attributes
 
 	virtual void printMediumData(ostream& stream) const;
 
