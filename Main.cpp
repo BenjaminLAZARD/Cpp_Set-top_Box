@@ -8,6 +8,7 @@
 #include "Video.h"
 #include "Picture.h"
 #include "Movie.h"
+#include "Album.h"
 
 using namespace std;
 
@@ -116,6 +117,30 @@ void test_step5_6_7() {
 	//no need to delete markers or the other movies since it is in the heap, and therefore destroyed at the end of the function
 }
 
+void test_step8_9(){
+	Video* video = new Video("video1", "C:/in/the/middle/of/nowhere/video.mp4", 32.5);
+	Picture* picture = new Picture("picture1", "C:/in/the/middle/of/nowhere/image.png", 16, 9);
+	int markers[4] = {2, 5, 10, 15};
+	Movie* movie = new Movie("movie1", "path",777, markers, 4);
+
+	Album* album = new Album("vacances");
+	album->push_back(video);
+	album->push_back(picture);
+	album->push_back(movie);
+	album->print(cout);
+
+	Album* album2 = new Album("travail");
+	album2->push_back(movie);
+	album2->print(cout);
+
+	delete album; album = nullptr;
+	album2->print(cout);
+
+	delete album2; album2 = nullptr;
+	delete video; delete picture; delete movie;
+	video = nullptr; picture=nullptr; movie=nullptr;
+};
+
 /*!
  * \brief test the different steps of the TP.
  * please un-comment the function corresponding to the steps you wish to try out, and leave the others commented.
@@ -124,5 +149,6 @@ void test_step5_6_7() {
 int main() {
 	//test_step1_2();
 	//test_step3_4();
-	test_step5_6_7();
+	//test_step5_6_7();
+	test_step8_9();
 }
