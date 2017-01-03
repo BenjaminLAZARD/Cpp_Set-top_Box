@@ -16,10 +16,14 @@
 #include "Movie.h"
 
 #include <list>
+#include <memory>
 
 using namespace std;
 
-class Album : public list<Media_object*>{
+using smartMediaPointer = shared_ptr<Media_object>;
+//using smartMediaPointer = Media_object*;
+
+class Album : public list<smartMediaPointer>{
 private:
 	string albumName;
 public:
@@ -29,7 +33,7 @@ public:
 	virtual string getalbumName()const final{return albumName;}
 	virtual void print(ostream& stream) final{
 		int i = 0;
-		for (list<Media_object*>::iterator it = this->begin(); it != this->end(); ++it){
+		for (list<smartMediaPointer>::iterator it = this->begin(); it != this->end(); ++it){
 			stream << "album " << albumName <<", item n° " << i << endl;
 			(*it)->printMediumData(cout);
 			i++;
