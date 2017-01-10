@@ -30,7 +30,7 @@ class Movie : public Video {
 		//Attention : possible ambiguity entre "movie" et video pour le "medium type".
 		Movie(const string name, const string absolute_path="", float duration=0,
 				const int* markers=nullptr, int number_of_chapters=0);
-		~Movie(){delete[] markers;}//!<We need to suppress the objects that are only pointed by this class, yet specific to it
+        ~Movie(){delete[] markers;cout << name << " was correctly destroyed"<<endl;}//!<We need to suppress the objects that are only pointed by this class, yet specific to it
 
 		virtual const int* getMarkers() const	final;
 		virtual int getNumberOfChapters() const	final{return number_of_chapters;}
