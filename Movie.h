@@ -44,6 +44,10 @@ class Movie : public Video {
 		//Let us redefine the copy of movie objects to guaranty full control of markers
 		Movie(const Movie& original);
 		Movie& operator=(const Movie& original);
+
+        virtual string getClass() const override {return "Movie";}
+        virtual void writeToFile(ostream & file) const override;
+        virtual void readFromFile(ostream & file) const override;
 };
 
 #endif /* MOVIE_H_ */

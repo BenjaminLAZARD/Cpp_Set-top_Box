@@ -89,5 +89,22 @@ Movie& Movie::operator=(const Movie& original){
 		}
 		else {this->markers = nullptr;}
 	}
-	return * this;
+    return * this;
+}
+
+void Movie::writeToFile(ostream &file) const {
+    Video::writeToFile(file);
+    file << number_of_chapters << "\n";
+    for (int chapter = 0; chapter < number_of_chapters; ++chapter) { file << markers[chapter] << "\n";}
+}
+
+void Movie::readFromFile(ostream &file) const {
+    Video::readFromFile(file);
+    string temp;
+    getline(file, temp);
+    number_of_chapters = stoi(temp);
+    for (int chapter = 0; chapter < number_of_chapters; ++chapter) {
+        getline(file, temp);
+        markers[chapter] = stoi(temp);
+    }
 }

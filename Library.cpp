@@ -139,3 +139,47 @@ bool Library::processRequest(TCPConnection& cnx, const string& request, string& 
 
     return true;
 }
+
+bool Library::saveToFile(const string & fileName) const {
+    ostream file(fileName);
+    if( ! file){
+        cerr << "The file " << fileName << "could not be opened" << endl;
+        return false;
+    }
+    for(auto it : mediaobjects_table){ it->writeToFile(file);}
+    return true;
+}
+
+bool Library::readFromFile(const string & fileName) const {
+    istream file(fileName);
+    if( ! file){
+        cerr << "The file " << fileName << "could not be opened" << endl;
+        return false;
+    }
+
+    while(file){
+        string medium_type = getline(file);
+        if(medium_type == "Mediaobject"){
+            moptr medium(new Media_object());
+        }
+        if(medium_type == "Picture"){
+            shared_ptr<Picture> medium(new Picture("name", "absolute_path", 0, 0));
+        }
+        if(medium_type == "Video"){
+            shared_ptr<Video> medium(new Video("name", "absolute_path", 0));
+        }
+        if(medium_type == "Movie"){
+            shared_ptr<Movie> medium(new Movie("name", "absolute_path", 0, NULL, 0));
+        }
+
+        medium->readFromFile(file);
+        if(file.fail()){
+            cerr << "The file " << fileName << "could not be read properly" << endl;
+            delete medium;
+            return false;
+        } else {
+            mediaobjects_table[medium.name] = medium;
+        }
+    }
+    return true;
+}

@@ -47,6 +47,20 @@ public:
 			string system_arg = "mpv " + absolute_path + " &";
 			system(system_arg.c_str());
 		}
+
+    virtual string getClass() const override{return "Video";}
+
+    virtual void writeToFile(ostream & file) const override {
+        Media_object::writeToFile(file);
+        file << duration << "\n";
+    }
+
+    virtual void readFromFile(ostream & file) const override{
+        Media_object::readFromFile(file);
+        string temp;
+        getline(file, temp);
+        duration = stoi(temp);
+    }
 };
 
 

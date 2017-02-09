@@ -20,7 +20,6 @@
 
 #include <iostream>
 #include <string>
-#include <iostream>
 #include <sstream>
 #include <stdlib.h>
 #include <memory>
@@ -69,5 +68,8 @@ public:
      * --play a media_object
      */
     virtual bool processRequest(TCPConnection& cnx, const string& request, string& response) final;
+
+    virtual bool saveToFile(const string & fileName) const final;
+    virtual bool readFromFile(const string & fileName) const final;
 };
 #endif // LIBRARY_H

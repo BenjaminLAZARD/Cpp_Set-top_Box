@@ -55,6 +55,22 @@ public:
 		string system_arg = "imagej " + absolute_path + " &";
 		system(system_arg.c_str());
 	}
+
+    virtual string getClass() const override{return "Picture";}
+
+    virtual void writeToFile(ostream & file) const override {
+        Media_object::writeToFile(file);
+        file << width << "\n" << height << "\n";
+    }
+
+    virtual void readFromFile(ostream & file) const override{
+        Media_object::readFromFile(file);
+        string temp;
+        getline(file, temp);
+        width = stoi(temp);
+        getline(file, temp);
+        height = stoi(temp);
+    }
 };
 
 #endif /* PICTURE_H_ */

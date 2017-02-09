@@ -18,6 +18,7 @@
 #define MEDIAOBJECT_H_
 
 #include <iostream>
+#include <sstream>
 #include <string>
 
 //So as to make strings and console_out directly accessible.
@@ -45,6 +46,10 @@ public:
 	 * \brief Unix command that plays the medium depending on its type.
 	 */
 	virtual void play() const =0;
+
+    virtual string getClass() const {return "Mediaobject";}
+    virtual void writeToFile(ostream & file) const;
+    virtual void readFromFile(ostream & file) const;
 };
 
 #endif /* MEDIAOBJECT_H_ */

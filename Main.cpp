@@ -191,7 +191,7 @@ int test_step11(){
     // create a TCP server
     shared_ptr<TCPServer> server(new TCPServer());
 
-    //create a Library
+    //create a non empty Library
     shared_ptr<Library> lib(new Library());
     lib->createVideo("forrestgump");
 
@@ -208,6 +208,20 @@ int test_step11(){
     return 0;
 }
 
+int test_step12(){
+    //create a non empty Library
+    shared_ptr<Library> lib(new Library());
+
+    lib->createVideo("forrestgump");
+    lib->createPicture("Tmoche");
+
+    lib->saveToFile("data_saved");
+    shared_ptr<Library> lib2(new Library());
+    lib2->readFromFile("data_saved");
+
+    lib2->searchByName("Tmoche");
+}
+
 /*!
  * \brief test the different steps of the TP.
  * please un-comment the function corresponding to the steps you wish to try out, and leave the others commented.
@@ -221,7 +235,8 @@ int main() {
     //test_step8();
     //test_step9();
     //test_step10();
-    test_step11();
+    //test_step11();
+    test_step12();
 
     return 0;
 

@@ -36,4 +36,7 @@ Pour éviter que les objets puissent être créés en dehors de la classe "bibli
 ## ETAPE 11
 Il est nettement plus simple d'ajouter la fonction processRequest à la bibliothèque pour que celle-ci ait accès aux bonnes variables.
 
+## ETAPE 12
+Cette étape a été réalisée comme dans le cours, et une procédure de test a été construite. Cependant, le débuggage n'a pas été fait par manque detemps (problème avec un getline). Normalement, peu de choses sont à modifier pour que cela soit correct.
+
 ___

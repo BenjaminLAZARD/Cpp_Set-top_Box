@@ -47,3 +47,14 @@ void Media_object::setName(const string name) {this->name = name;}
 void Media_object::printMediumData(ostream& stream) const {
     stream << "Name: " << name << "    " << "Absolute path: " << absolute_path << "    ";// << endl;//as we cannot use "\n" because of server communications
 }
+
+void Media_object::writeToFile(ostream &file) const{
+    file << getClass() << "\n"
+         << name << "\n"
+         << absolute_path << "\n";
+}
+
+void Media_object::readFromFile(ostream &file) const{
+    getline(file, name);
+    getline(file, absolute_path);
+}
