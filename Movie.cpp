@@ -44,9 +44,9 @@ Chapters_data Movie::getChaptersData() const {
 
 void Movie::printMarkers(ostream& stream) const {
 	for (int chapter = 0; chapter < number_of_chapters; ++chapter) {
-		stream << "chapter n° " << chapter << ", index = " << markers[chapter] << "\n";
+        stream << "chapter n° " << chapter << ", index = " << markers[chapter] << "    "; //as we cannot insert "\n" in case of server communications
 	}
-	stream << "Total number of chapters = " << number_of_chapters << "\n" << endl;
+    stream << "Total number of chapters = " << number_of_chapters << "    " ;//<< endl;
 }
 
 void Movie::printMediumData(ostream& stream) const {Video::printMediumData(stream); printMarkers(stream);}

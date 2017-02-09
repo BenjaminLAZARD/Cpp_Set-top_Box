@@ -34,7 +34,7 @@ public:
 	virtual void print(ostream& stream) final{
 		int i = 0;
 		for (list<smartMediaPointer>::iterator it = this->begin(); it != this->end(); ++it){
-			stream << "album " << albumName <<", item n° " << i << endl;
+            stream << "album " << albumName <<", item n° " << i ;//no endl since it is trouble for server communication
 			(*it)->printMediumData(cout);
 			i++;
 		}

@@ -53,8 +53,12 @@ void Library::searchByName(const string name, ostream &stream){
     if(mi == mediaobjects_table.end()){media = false;}
     if(ai == albums_table.end()){album = false;}
 
-    if (media) { stream<<"one medium was found"<<endl; (mi->second)->printMediumData(stream);}    //print the appropriate media
-    if (album) { stream<<"one album was found"<<endl; (ai->second)->print(stream);}   //print the appropriate media
+    if (media) { stream<<"one medium was found    "   ;//<<endl;
+        (mi->second)->printMediumData(stream);//print the appropriate media
+    }
+    if (album) { stream<<"one album was found    "   ;//<<endl;
+        (ai->second)->print(stream); //print the appropriate media
+    }
     if(!media && !album){stream<<"this element could not be found"<<endl;}
 }
 
@@ -63,7 +67,9 @@ void Library::playMedium(const string name, ostream &stream){
     bool media = true;
     if(mi == mediaobjects_table.end()){media = false;}
 
-    if (media) { stream<<"one medium was found"<<endl; (mi->second)->play();}
+    if (media) {
+        stream<<"one medium was found   " ;//<<endl;
+        (mi->second)->play();}
     else {stream<<"this element could not be found"<<endl;}
 }
 
@@ -74,7 +80,8 @@ void Library::deleteMedium(const string name, ostream &stream){
     //
     //delete it from mediumobject table
     media_iterator mi = mediaobjects_table.find(name);
-    if(mi == mediaobjects_table.end()){stream<<"medium was not found"<<endl;}
+    if(mi == mediaobjects_table.end()){stream<<"medium was not found " ;// <<endl;
+    }
     else{
         mediaobjects_table.erase(mi);
         stream<<"this element was successfully deleted"<<endl;
@@ -82,7 +89,7 @@ void Library::deleteMedium(const string name, ostream &stream){
     //it should then be distroyed entirely because of smartpointers
 }
 
-void Library::deleteAlbum(const string name, ostream &stream){
+void Library::deleteAlbum(const string name, ostream & stream){
     album_iterator ai = albums_table.find(name);
     if (ai == albums_table.end()) { stream<<"medium was not found"<<endl;}
     else {
@@ -90,4 +97,45 @@ void Library::deleteAlbum(const string name, ostream &stream){
         stream<<"this element was successfully deleted"<<endl;
     }
     //it should then be distroyed entirely because of smartpointers
+}
+
+bool Library::processRequest(TCPConnection& cnx, const string& request, string& response){
+    //print the request that has just been made
+    cerr << "\nRequest: '" << request << "'" << endl;
+    response= "";//let us fix the response
+
+
+    //First let us analyse the query.
+    //Suppose the request is either "SEARCH$<title>" or "PLAY$<title>" or "QUIT$ ". We just hav to parse that.
+    istringstream stream(request); ostringstream pre_response; //get input and output as streams
+    string order; string title; //store the data from the request
+    getline(stream, order, '$'); getline(stream, title, '$');
+
+
+
+    //Now let us process this data
+    TCPLock lock(cnx);//lock while reading the library (in case of multiple client-threads)
+    // if we modify data, we have to put a writing lock : // TCPLock lock(cnx, true);
+
+    //if(title == "NULL"){title = "";} //eliminate mistake when title is forgotten
+    if(order == "SEARCH"){
+        searchByName(title, pre_response); //get the results of previously defined searchByName function
+
+    } else if (order == "PLAY") {
+        playMedium(title, pre_response);//get the results of previously defined searchByName function + plays music in the library
+
+    } else if (order == "QUIT"){
+        response = "OK, it was nice seing you";
+        return false; //this will close the connection
+    } else {
+        response = "Sorry buddy, but there is a problem in your query!";
+        return true;
+    }
+
+
+    //Eventually, let us return our response  // be wary of  \n and \r as server-client communication would be impacted
+    if (response == "") {response =  pre_response.str();}//converts the stream obtained into a string
+    cerr << "response: " << response << endl;
+
+    return true;
 }

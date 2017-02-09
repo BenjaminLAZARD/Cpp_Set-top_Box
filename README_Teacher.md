@@ -29,5 +29,11 @@ correspondant lors de la copie avec la méthode operator= et le constructor copy
 Les éléments du tableau ne sont que des références pour que des modifications sur les objets se répecercutent sur des consultations ultérieurs du tableau. Cela sert également à assurer le partage dynamique entre objets : si on modifie une photo, on doit pouvoir retrouver la photo modifiée dans les groupes auxquels appartient la photo.
 
 ## ETAPE 10
-Pour éviter que les objets puissent être créés en dehors de la classe "bibliothèque" (library chez moi)
+Pour éviter que les objets puissent être créés en dehors de la classe "bibliothèque" (library chez moi)... Il  y a plusieurs solutions...
++ Une première façon de faire est d'utiliser les classes multimedia comme des classes imbriquées dans la bibliothèque.
++ Une deuxième façon de faire serait de déclarer les constructeurs comme étant des méthodes privées... Mais c'et vraiment bizarre. On préfère donc la première solution bien que je ne l'ai pas mise en place ici.
+
+## ETAPE 11
+Il est nettement plus simple d'ajouter la fonction processRequest à la bibliothèque pour que celle-ci ait accès aux bonnes variables.
+
 ___

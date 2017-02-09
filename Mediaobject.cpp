@@ -45,5 +45,5 @@ void Media_object::setName(const string name) {this->name = name;}
 
 //other functions
 void Media_object::printMediumData(ostream& stream) const {
-	stream << "Name: " << name << "\n" << "Absolute path: " << absolute_path << "\n" << endl;
+    stream << "Name: " << name << "    " << "Absolute path: " << absolute_path << "    ";// << endl;//as we cannot use "\n" because of server communications
 }

@@ -33,10 +33,10 @@ public:
 	virtual void setDuration(float duration) final {this->duration = duration;}
 
 	void printMediumData(ostream& stream) const override {
-		stream << "Name: " << name << "\n"
-		<< "Absolute path: " << absolute_path << "\n"
-		<< "Duration: " << duration << "\n"
-		<< endl;
+        stream << "Name: " << name << "    "//as we cannot use "\n" because of server communications
+        << "Absolute path: " << absolute_path << "    "
+        << "Duration: " << duration << "    "
+        ;//<< endl;
 	}
 
 	/*!

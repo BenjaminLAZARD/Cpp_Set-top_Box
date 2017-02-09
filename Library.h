@@ -16,14 +16,18 @@
 #include "Video.h"
 #include "Movie.h"
 #include "Album.h"
+#include "tcpserver.h"
 
 #include <iostream>
 #include <string>
+#include <iostream>
+#include <sstream>
 #include <stdlib.h>
 #include <memory>
 #include <map>
 
 using namespace std;
+using namespace cppu;
 using moptr = shared_ptr<Media_object>;
 using aptr = shared_ptr<Album>;
 using media_map = map<string, moptr>;
@@ -52,5 +56,18 @@ public:
     virtual void playMedium(const string _name, ostream &stream) final;
     virtual void deleteMedium(const string name, ostream &stream) final;
     virtual void deleteAlbum(const string name, ostream &stream) final;
+
+    /**
+     * @brief process any request made by an exterior client, codified in a specific way.
+     * @param cnx
+     * @param request
+     * @param response
+     * @return status of the treatment of the query
+     *
+     * 2 actions are possible:
+     * --search for an element and display it
+     * --play a media_object
+     */
+    virtual bool processRequest(TCPConnection& cnx, const string& request, string& response) final;
 };
 #endif // LIBRARY_H

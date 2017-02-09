@@ -40,11 +40,11 @@ public:
 	virtual void setHeight(float height)final {this->height = height;}
 
 	void printMediumData(ostream& stream) const override {
-		stream << "Name: " << name << "\n"
-	    << "Absolute path: " << absolute_path << "\n"
-	    << "Width: " << width << "\n"
-	    << "Height: " << height << "\n"
-	    << endl;
+        stream << "Name: " << name << "    "//as we cannot use "\n" because of server communications
+        << "Absolute path: " << absolute_path << "    "
+        << "Width: " << width << "    "
+        << "Height: " << height << "    "
+        ;//<< endl;
 	}
 
 	/*!

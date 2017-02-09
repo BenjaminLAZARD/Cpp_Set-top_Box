@@ -10,8 +10,8 @@
 #include "Movie.h"
 #include "Album.h"
 #include "Library.h"
-#include "settopbox.h"
-#include "remotecontrol.h"
+
+const int PORT = 3331;
 
 //using namespace std;
 
@@ -188,24 +188,22 @@ void test_step10(){
 }
 
 int test_step11(){
-    // cree le TCPServer
+    // create a TCP server
     shared_ptr<TCPServer> server(new TCPServer());
 
-    // cree l'objet qui gère les données
-    shared_ptr<MyBase> base(new MyBase());
+    //create a Library
+    shared_ptr<Library> lib(new Library());
+    lib->createVideo("forrestgump");
 
-    // le serveur appelera cette méthode chaque fois qu'il y a une requête
-    server->setCallback(*base, &MyBase::processRequest);
+    // Set sever callback as the dedicated function of the library previouslt created.
+    server->setCallback(*lib, &Library::processRequest);
 
-    // lance la boucle infinie du serveur
+    // launch the server (loop)
     cout << "Starting Server on port " << PORT << endl;
-    int status = server->run(PORT);
 
-    // en cas d'erreur
-    if (status < 0) {
-      cerr << "Could not start Server on port " << PORT << endl;
-      return 1;
-    }
+    //possible server error:
+    int status = server->run(PORT);
+    if (status < 0) {cerr << "Could not start Server on port " << PORT << endl; return 1;}
 
     return 0;
 }
@@ -223,7 +221,7 @@ int main() {
     //test_step8();
     //test_step9();
     //test_step10();
-    int  k = test_step11(); cout<< k_resut <<endl;
+    test_step11();
 
     return 0;
 
