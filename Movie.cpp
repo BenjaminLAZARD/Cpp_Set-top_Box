@@ -8,6 +8,24 @@
 
 using namespace std;
 
+/**
+ * @brief The belowZeroDuration struct is an error raised when the length of the chapters_list of a movie is not "possible"
+ */
+struct belowZeroDuration : public exception {
+    int x;
+    belowZeroDuration(int x): x(x) {}
+};
+
+/**
+ * @brief test_duration tests whether it is appropriate to raise a belowZeroDuration error or not
+ * @param x
+ * @return false/error
+ */
+bool test_duration(int x){
+    if(x < 0){return true; throw belowZeroDuration(name);}
+    return false;
+}
+
 Movie::Movie(const string name, const string absolute_path, float duration,
 			 const int* markers, int number_of_chapters) : Video(name, absolute_path, duration){
 	//this->name = name;//!< Value defined in global_constants.cpp ( should be "movie")
@@ -16,6 +34,7 @@ Movie::Movie(const string name, const string absolute_path, float duration,
 	//at the private values.
 
 	//setting up these values.
+    test_duration(number_of_chapters);
 	this->setMarkers(markers, number_of_chapters);
 }
 

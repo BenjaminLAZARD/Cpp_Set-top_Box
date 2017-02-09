@@ -16,17 +16,80 @@ using album_iterator = map<string,  shared_ptr<Album>>::iterator;
 //Library::Library(){}
 //Library::~Library(){}
 
+/**
+ * @brief The AlreadyExists is an error raised when one tries to create an object with a name already in the database
+ */
+struct AlreadyExists : public exception {
+    string x;
+    AlreadyExists(string x): x(x) {}
+};
+
+/**
+ * @brief The DoesNotExist struct is an error raised when one tries to delete an object using a name that is not registered in the database
+ */
+struct DoesNotExist : public exception {
+    string x;
+    DoesNotExist(string x): x(x) {}
+};
+
+/**
+ * @brief find_medium_match tests whether it is appropriate or not to raise an AlreadyExists error
+ * @param m
+ * @param name
+ * @return false/error
+ */
+bool find_medium_match(media_map m, string name){
+    auto it = m.find(name);
+    if(it != m.end()){throw AlreadyExists(name);}
+    return false;
+}
+
+bool find_album_match(album_map m, string name){
+    auto it = m.find(name);
+    if(it != m.end()){throw AlreadyExists(name);}
+    return false;
+}
+
+/**
+ * @brief medium_delete_intent tests whether it is appropriate or not to raise a DoesNotExist error
+ * @param m
+ * @param name
+ * @return false/error
+ */
+bool medium_delete_intent(media_map m, string name){
+    auto it = m.find(name);
+    if(it != m.end()){return false;}
+    throw DoesNotExist(name);
+}
+
+bool album_delete_intent(album_map m, string name){
+    auto it = m.find(name);
+    if(it != m.end()){return false;}
+    throw DoesNotExist(name);
+}
+
 shared_ptr<Picture> Library::createPicture(const string name, const string absolute_path, float width, float height){
     //Picture* temp = new Picture(name, absolute_path, width, height);
     shared_ptr<Picture> temp(new Picture(name, absolute_path, width, height));
-    mediaobjects_table[name] = temp;
+    try {
+        find_medium_match(name);
+        mediaobjects_table[name] = temp;
+    } catch (...) {
+        cerr << name << "already exists" << endl;
+    }
+
     return temp;
 }
 
 shared_ptr<Video> Library::createVideo(const string name, const string absolute_path, float duration){
     //Video* temp = new Video(name, absolute_path, duration);
     shared_ptr<Video> temp(new Video(name, absolute_path, duration));
-    mediaobjects_table[name] = temp;
+    try {
+        find_medium_match(name);
+        mediaobjects_table[name] = temp;
+    } catch (...) {
+        cerr << name << "already exists" << endl;
+    }
     return temp;
 }
 
@@ -34,14 +97,24 @@ shared_ptr<Movie> Library::createMovie(const string name, const string absolute_
                           const int* markers, int number_of_chapters){
     //Movie* temp = new Movie(name, absolute_path, duration, markers, number_of_chapters);
     shared_ptr<Movie> temp(new Movie(name, absolute_path, duration, markers, number_of_chapters));
-    mediaobjects_table[name] = temp;
+    try {
+        find_medium_match(name);
+        mediaobjects_table[name] = temp;
+    } catch (...) {
+        cerr << name << "already exists" << endl;
+    }
     return temp;
 }
 
 shared_ptr<Album> Library::createAlbum(string albumName){
     //Album* temp = new Album(albumName);
     shared_ptr<Album> temp(new Album(albumName));
-    albums_table[albumName] = temp;
+    try {
+        find_album_match(name);
+        albums_table[name] = temp;
+    } catch (...) {
+        cerr << name << "already exists" << endl;
+    }
     return temp;
 }
 
@@ -74,12 +147,12 @@ void Library::playMedium(const string name, ostream &stream){
 }
 
 void Library::deleteMedium(const string name, ostream &stream){
-    //iterate through albums to find this medium and delete it
-    //
-    //
-    //
-    //delete it from mediumobject table
     media_iterator mi = mediaobjects_table.find(name);
+
+    try {
+        medium_delete_intent(mediaobjects_table, name);
+    } catch (...) { } //nothing to do since this error was already handled before... It is just to show I can raise my own errors
+
     if(mi == mediaobjects_table.end()){stream<<"medium was not found " ;// <<endl;
     }
     else{
@@ -90,6 +163,10 @@ void Library::deleteMedium(const string name, ostream &stream){
 }
 
 void Library::deleteAlbum(const string name, ostream & stream){
+    try {
+        album_delete_intent(albums_table, name);
+    } catch (...) { } //nothing to do since this error was already handled before... It is just to show I can raise my own errors
+
     album_iterator ai = albums_table.find(name);
     if (ai == albums_table.end()) { stream<<"medium was not found"<<endl;}
     else {

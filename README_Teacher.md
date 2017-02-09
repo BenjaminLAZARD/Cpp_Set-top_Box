@@ -1,4 +1,5 @@
 # TP de C++ set-top box
+**Address of the web-content : https://github.com/BenjaminLAZARD/inf224**
 ## Etape 4
 + Une méthode dont l'implémentation n'a pas de sens au niveau de la classe de base est dite abstraite.
 On les déclare avec "=0" à la fin de la signature dans le header.
@@ -38,5 +39,9 @@ Il est nettement plus simple d'ajouter la fonction processRequest à la biblioth
 
 ## ETAPE 12
 Cette étape a été réalisée comme dans le cours, et une procédure de test a été construite. Cependant, le débuggage n'a pas été fait par manque detemps (problème avec un getline). Normalement, peu de choses sont à modifier pour que cela soit correct.
+
+## ETAPE 13
+Cette étape a été réalisée comme dans le cours, et une procédure de test a été construite. Cependant, le débuggage n'a pas été fait par manque de temps (problème avec un getline). Normalement, peu de choses sont à modifier pour que cela soit correct.
+Dans les 3 cas suggérés par l'énoncé, des erreurs ont été levées. Pour le cas d'une suppression intempestive, une solution sans levée d'erreur ayant déjà été construite, l'erreur n'a été rajoutée que pour montrer ma compréhension du principe.
 
 ___

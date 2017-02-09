@@ -220,6 +220,19 @@ int test_step12(){
     lib2->readFromFile("data_saved");
 
     lib2->searchByName("Tmoche");
+
+    delete lib; delete lib2;
+}
+
+int test_step13(){
+    //create a non empty Library
+    shared_ptr<Library> lib(new Library());
+
+    lib->createVideo("itsawonderfullife");
+    lib->createVideo("itsawonderfullife");
+    lib->deleteMedium("elcrimenferpecto");
+
+    delete lib;
 }
 
 /*!
@@ -236,7 +249,8 @@ int main() {
     //test_step9();
     //test_step10();
     //test_step11();
-    test_step12();
+    //test_step12();
+    test_step13();
 
     return 0;
 
