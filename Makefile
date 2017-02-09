@@ -13,7 +13,7 @@ PROG = inf224_tp1
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = Mediaobject.cpp Main.cpp global_constants.cpp Movie.cpp Album.cpp
+SOURCES = Mediaobject.cpp Main.cpp global_constants.cpp Movie.cpp Album.cpp Library.cpp cppsocket.cpp tcpserver.cpp remotecontrol.cpp settopbox.cpp
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)
@@ -41,7 +41,7 @@ LDFLAGS =
 # Librairies a utiliser
 # Exemple: LDLIBS = -L/usr/local/qt/lib -lqt
 #
-LDLIBS =
+LDLIBS =  -lpthread
 
 
 ##########################################

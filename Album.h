@@ -20,8 +20,8 @@
 
 using namespace std;
 
-//using smartMediaPointer = shared_ptr<Media_object>;
-using smartMediaPointer = Media_object*;
+using smartMediaPointer = shared_ptr<Media_object>;
+//using smartMediaPointer = Media_object*;
 
 class Album : public list<smartMediaPointer>{
 private:

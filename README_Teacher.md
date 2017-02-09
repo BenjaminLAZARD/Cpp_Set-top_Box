@@ -26,5 +26,8 @@ pour les autres attributs des autres classes. Seul le pointeur est détruit lors
 correspondant lors de la copie avec la méthode operator= et le constructor copy.
 
 ## Etape 8
-Les éléments du tableau ne sont que des références pour que des modifications sur les objets se répecercutent sur des consultations ultérieurs du tableau. Cela sert également à assurer le partage dynamique entre objets : si on modifie une photo, on doit pouvoir retrouver la photo modifiée dans les groupes auxquels appartient la photo. 
+Les éléments du tableau ne sont que des références pour que des modifications sur les objets se répecercutent sur des consultations ultérieurs du tableau. Cela sert également à assurer le partage dynamique entre objets : si on modifie une photo, on doit pouvoir retrouver la photo modifiée dans les groupes auxquels appartient la photo.
+
+## ETAPE 10
+Pour éviter que les objets puissent être créés en dehors de la classe "bibliothèque" (library chez moi)
 ___

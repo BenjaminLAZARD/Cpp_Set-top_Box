@@ -9,61 +9,64 @@
 #include "Picture.h"
 #include "Movie.h"
 #include "Album.h"
+#include "Library.h"
+#include "settopbox.h"
+#include "remotecontrol.h"
 
-using namespace std;
+//using namespace std;
 
 void test_step1_2(){
-	//medium has become an abstract class, and is no longer posible to instanciate
-	//Media_object* medium = new Media_object("image", "C:/in/the/middle/of/nowhere/img.png");
-	//medium->printMediumData(cout);
+    //medium has become an abstract class, and is no longer posible to instanciate
+    //Media_object* medium = new Media_object("image", "C:/in/the/middle/of/nowhere/img.png");
+    //medium->printMediumData(cout);
 
-	Video* video = new Video();
-	video->printMediumData(cout);
-	delete video;
-	video = nullptr;
+    Video* video = new Video();
+    video->printMediumData(cout);
+    delete video;
+    video = nullptr;
 
-	video = new Video("video1", "C:/in/the/middle/of/nowhere/video.mp4", 32.5);
-	video->setDuration(6);
-	video->setAbsolutePath("HDD");
-	video->printMediumData(cout);
+    video = new Video("video1", "C:/in/the/middle/of/nowhere/video.mp4", 32.5);
+    video->setDuration(6);
+    video->setAbsolutePath("HDD");
+    video->printMediumData(cout);
 
-	Picture* picture = new Picture("picture1", "C:/in/the/middle/of/nowhere/image.png", 16, 9);
-	picture->printMediumData(cout);
+    Picture* picture = new Picture("picture1", "C:/in/the/middle/of/nowhere/image.png", 16, 9);
+    picture->printMediumData(cout);
 
-	delete video; delete picture; video = nullptr; picture = nullptr;
-	//no need to delete n since it is in the heap, and therefore destroyed at the end of the function
+    delete video; delete picture; video = nullptr; picture = nullptr;
+    //no need to delete n since it is in the heap, and therefore destroyed at the end of the function
 }
 
 void test_step3_4() {
-	int n = 2;
-	Media_object** playlist = new Media_object* [n]{
-		new Video("something", "here", 3),
-		new Picture("some other thing", "there", 16, 9),
-	};
+    int n = 2;
+    Media_object** playlist = new Media_object* [n]{
+        new Video("something", "here", 3),
+        new Picture("some other thing", "there", 16, 9)
+    };
 
-	/*!
-	 * __ In the following loop, we use polymorphism to print the proeprties of any medium ,
-	 *    regardless of its type.
-	 * __ C++ looping over arrays require the length of the array to be known
-	 * __ The elements of the playlist are pointers towards object (to allow changes on the objects to be found while
-	 *    picking an object from the array).
-	 * __ Java allows the programmer to use transparently references towards objects as their name, hiding the pointers
-	 *    mambo-jumbo. However, its implementation involves something similar to C++.
-	 */
+    /*!
+     * __ In the following loop, we use polymorphism to print the proeprties of any medium ,
+     *    regardless of its type.
+     * __ C++ looping over arrays require the length of the array to be known
+     * __ The elements of the playlist are pointers towards object (to allow changes on the objects to be found while
+     *    picking an object from the array).
+     * __ Java allows the programmer to use transparently references towards objects as their name, hiding the pointers
+     *    mambo-jumbo. However, its implementation involves something similar to C++.
+     */
 
-	for (int i = 0; i < n; ++i) {
-		playlist[i]->printMediumData(cout);
-	}
+    for (int i = 0; i < n; ++i) {
+        playlist[i]->printMediumData(cout);
+    }
 
-	delete[] playlist; playlist = nullptr;
+    delete[] playlist; playlist = nullptr;
 }
 
 void test_step5_6_7() {
-	int n = 4;
-	int markers[n] = {2, 5, 10, 15};
-	Movie* movie = new Movie("movie1", "path",777, markers, n);
+    int n = 4;
+    int markers[n] = {2, 5, 10, 15};
+    Movie* movie = new Movie("movie1", "path",777, markers, n);
 
-	//Testing my arithmetics to measure markers length:
+    //Testing my arithmetics to measure markers length:
 //	cout << "size of markers = " << sizeof(markers) << "; size of markers[0] = " << sizeof(*markers)
 //		 << "; division result = " << sizeof(markers)/sizeof(*markers) << "\n"
 //		 << "object calculation: " << movie->getNumberOfChapters()
@@ -71,50 +74,50 @@ void test_step5_6_7() {
 //	//strangely, the arithmetics with sizeof does not work inside the movie object. (size of markers become that of int = 4)
 
 
-	//Testing inner functions access capability.
-	cout << "INNER FUNCTIONS TEST" << "\n\n\n"
-		 << "retrieving structured return : number of chapters = " << movie->getChaptersData().number_of_chapters
-		 << " ||| chapter 0 marker = " << movie->getChaptersData().markers[0]
-		 << "\n" <<endl;
-	cout << "printMediumData"<<endl;
-	movie->printMediumData(cout);
+    //Testing inner functions access capability.
+    cout << "INNER FUNCTIONS TEST" << "\n\n\n"
+         << "retrieving structured return : number of chapters = " << movie->getChaptersData().number_of_chapters
+         << " ||| chapter 0 marker = " << movie->getChaptersData().markers[0]
+         << "\n" <<endl;
+    cout << "printMediumData"<<endl;
+    movie->printMediumData(cout);
 
 
-	//Let us change markers used for initialization, and see if it affects movie->markers
-	cout << "ENCAPSULATION TESTS" << "\n\n\n"
-	     << "encapsulation test 1 , the markers output should be unchanged" <<endl;
-	markers[0] = 3;
-	movie->printMarkers(cout);
+    //Let us change markers used for initialization, and see if it affects movie->markers
+    cout << "ENCAPSULATION TESTS" << "\n\n\n"
+         << "encapsulation test 1 , the markers output should be unchanged" <<endl;
+    markers[0] = 3;
+    movie->printMarkers(cout);
 
-	cout << "encapsulation test 2, the markers output should be unchanged" <<endl;
-	//const int * markers2 = movie->getMarkers();//cannot be modified
-	movie->printMarkers(cout);
+    cout << "encapsulation test 2, the markers output should be unchanged" <<endl;
+    //const int * markers2 = movie->getMarkers();//cannot be modified
+    movie->printMarkers(cout);
 
 
-	//Let us try different copies of movie, and check they are independent from the original.
-	cout << "encapsulation test 3, the markers output should be unchanged" <<endl;
-	markers[0] = 2;
-	movie->setMarkers(markers, n);
-	Movie movie_le_retour = *movie;//notice that we work with movie objects here and not with movie* pointers.
-	//movie_le_retour.printMarkers(cout); //this one is correctly printed (you can check)
-	markers[2] = 71;
-	movie->setMarkers(markers, n);
-	//movie->printMarkers(cout);
-	movie_le_retour.printMarkers(cout);
+    //Let us try different copies of movie, and check they are independent from the original.
+    cout << "encapsulation test 3, the markers output should be unchanged" <<endl;
+    markers[0] = 2;
+    movie->setMarkers(markers, n);
+    Movie movie_le_retour = *movie;//notice that we work with movie objects here and not with movie* pointers.
+    //movie_le_retour.printMarkers(cout); //this one is correctly printed (you can check)
+    markers[2] = 71;
+    movie->setMarkers(markers, n);
+    //movie->printMarkers(cout);
+    movie_le_retour.printMarkers(cout);
 
-	//same thing as before, but trying to initialize the new object with constructor definition.
-	cout << "encapsulation test 4, the markers output should be unchanged" <<endl;
-	markers[2] = 10;
-	movie->setMarkers(markers, n);
-	Movie movie_epilogue(*movie);
-	movie_epilogue.printMarkers(cout);
-	markers[3] = 100100010;
-	movie->setMarkers(markers, n);
-	movie_epilogue.printMarkers(cout);
+    //same thing as before, but trying to initialize the new object with constructor definition.
+    cout << "encapsulation test 4, the markers output should be unchanged" <<endl;
+    markers[2] = 10;
+    movie->setMarkers(markers, n);
+    Movie movie_epilogue(*movie);
+    movie_epilogue.printMarkers(cout);
+    markers[3] = 100100010;
+    movie->setMarkers(markers, n);
+    movie_epilogue.printMarkers(cout);
 
-	delete movie; movie = nullptr;
-	//delete[] markers2; markers2 = nullptr;
-	//no need to delete markers or the other movies since it is in the heap, and therefore destroyed at the end of the function
+    delete movie; movie = nullptr;
+    //delete[] markers2; markers2 = nullptr;
+    //no need to delete markers or the other movies since it is in the heap, and therefore destroyed at the end of the function
 }
 
 //void test_step8(){
@@ -159,7 +162,53 @@ void test_step9(){
     delete album; album = nullptr;
     album2->print(cout);
     delete album2; album2 = nullptr;
-};
+}
+
+void test_step10(){
+    Library* lib = new Library();
+    cout << "\n creation test" <<endl;
+    lib->createPicture("dessin");
+    lib->createVideo("terminator");
+
+    lib->createAlbum("playlist");
+
+    cout << "\n search test" <<endl;
+    lib->searchByName("dessin", cout);
+    lib->searchByName("playlist", cout);
+
+    cout << "\n test with unexisting object" <<endl;
+    lib->searchByName("plum", cout);
+
+    cout << "\n deletion test"<<endl;
+    lib->deleteMedium("dessin", cout);
+    lib->searchByName("dessin", cout);
+
+
+    delete lib;
+}
+
+int test_step11(){
+    // cree le TCPServer
+    shared_ptr<TCPServer> server(new TCPServer());
+
+    // cree l'objet qui gère les données
+    shared_ptr<MyBase> base(new MyBase());
+
+    // le serveur appelera cette méthode chaque fois qu'il y a une requête
+    server->setCallback(*base, &MyBase::processRequest);
+
+    // lance la boucle infinie du serveur
+    cout << "Starting Server on port " << PORT << endl;
+    int status = server->run(PORT);
+
+    // en cas d'erreur
+    if (status < 0) {
+      cerr << "Could not start Server on port " << PORT << endl;
+      return 1;
+    }
+
+    return 0;
+}
 
 /*!
  * \brief test the different steps of the TP.
@@ -167,9 +216,15 @@ void test_step9(){
  * @return console output mostly.
  */
 int main() {
-	//test_step1_2();
-	//test_step3_4();
+
+    //test_step1_2();
+    //test_step3_4();
     //test_step5_6_7();
     //test_step8();
-    test_step9();
+    //test_step9();
+    //test_step10();
+    int  k = test_step11(); cout<< k_resut <<endl;
+
+    return 0;
+
 }
