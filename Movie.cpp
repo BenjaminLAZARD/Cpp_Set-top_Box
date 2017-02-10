@@ -22,7 +22,7 @@ struct belowZeroDuration : public exception {
  * @return false/error
  */
 bool test_duration(int x){
-    if(x < 0){return true; throw belowZeroDuration(name);}
+    if(x < 0){return true; throw belowZeroDuration(x);}
     return false;
 }
 
@@ -117,13 +117,13 @@ void Movie::writeToFile(ostream &file) const {
     for (int chapter = 0; chapter < number_of_chapters; ++chapter) { file << markers[chapter] << "\n";}
 }
 
-void Movie::readFromFile(ostream &file) const {
+void Movie::readFromFile(ostream &file) {
     Video::readFromFile(file);
     string temp;
-    getline(file, temp);
+    //getline(file, temp);
     number_of_chapters = stoi(temp);
     for (int chapter = 0; chapter < number_of_chapters; ++chapter) {
-        getline(file, temp);
+        //getline(file, temp);
         markers[chapter] = stoi(temp);
     }
 }

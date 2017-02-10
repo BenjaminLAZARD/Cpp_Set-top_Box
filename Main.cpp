@@ -219,9 +219,9 @@ int test_step12(){
     shared_ptr<Library> lib2(new Library());
     lib2->readFromFile("data_saved");
 
-    lib2->searchByName("Tmoche");
+    lib2->searchByName("Tmoche", cout);
 
-    delete lib; delete lib2;
+    //delete lib; delete lib2;
 }
 
 int test_step13(){
@@ -230,9 +230,32 @@ int test_step13(){
 
     lib->createVideo("itsawonderfullife");
     lib->createVideo("itsawonderfullife");
-    lib->deleteMedium("elcrimenferpecto");
+    lib->deleteMedium("elcrimenferpecto", cout);
 
-    delete lib;
+    //delete lib;
+}
+
+int final_test(){
+    // create a TCP server
+    shared_ptr<TCPServer> server(new TCPServer());
+
+    //create a non empty Library
+    shared_ptr<Library> lib(new Library());
+    lib->createVideo("whereiwent", "https://www.youtube.com/watch?v=R1NagZN2kjY", 99);
+    lib->createPicture("landscape", "http://perso.telecom-paristech.fr/~blazard/TP%20serveur/image.jpg", 16, 9);
+
+    // Set sever callback as the dedicated function of the library previouslt created.
+    server->setCallback(*lib, &Library::processRequest);
+
+    // launch the server (loop)
+    cout << "Starting Server on port " << PORT << endl;
+
+    //possible server error:
+    int status = server->run(PORT);
+    if (status < 0) {cerr << "Could not start Server on port " << PORT << endl; return 1;}
+
+    return 0;
+
 }
 
 /*!
@@ -248,9 +271,10 @@ int main() {
     //test_step8();
     //test_step9();
     //test_step10();
-    //test_step11();
+    //test_step11(); //tested with the cpp client successfully
     //test_step12();
-    test_step13();
+    //test_step13();
+    final_test(); //try playing "landscape" and "whereiwent" in the remote. It will work if you work under linux
 
     return 0;
 

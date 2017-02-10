@@ -49,7 +49,7 @@ public:
 
     virtual string getClass() const {return "Mediaobject";}
     virtual void writeToFile(ostream & file) const;
-    virtual void readFromFile(ostream & file) const;
+    virtual void readFromFile(ostream & file);
 };
 
 #endif /* MEDIAOBJECT_H_ */

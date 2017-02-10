@@ -25,4 +25,4 @@ Strange comments in the sources allow Doxygen to work.
 Mingw64 offers both support for g++ compiler, and enable a Windows user to generate the *.exe* files with the sole command
 `mingw64-make run` instead of `make run` under Linux.
 
-But although I tested this options, *Eclipse* correctly parametered, allows for a full build and run with `CTRL + F11`.
+But although I tested this options, *Eclipse* correctly parametered, allows for a full build and run with `CTRL + F11` (except for my problem with *shared_ptr* ).

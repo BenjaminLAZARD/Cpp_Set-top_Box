@@ -54,7 +54,7 @@ void Media_object::writeToFile(ostream &file) const{
          << absolute_path << "\n";
 }
 
-void Media_object::readFromFile(ostream &file) const{
-    getline(file, name);
-    getline(file, absolute_path);
+void Media_object::readFromFile(ostream &file){
+    //getline(file, name);
+    //getline(file, absolute_path);
 }

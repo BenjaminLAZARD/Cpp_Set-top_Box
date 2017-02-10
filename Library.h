@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <memory>
 #include <map>
+#include <typeinfo> // to retrieve the name of the class of the objects stored in the library
 
 using namespace std;
 using namespace cppu;

@@ -1,5 +1,6 @@
 # TP de C++ set-top box
 **Address of the full content with _Version Control_ : https://github.com/BenjaminLAZARD/inf224**
+A cette adresse il est possible de consulter le dépot GIT où j'ai réalisé mon travail, étape par étape.
 
 Pour visualiser ce fichier stylisé, il suffit de l'ouvrir dans Atom et d'utiliser le raccourci `ctrl + maj + m`. Eclipse ou un navigateur internet le permettent également.
 
@@ -44,13 +45,13 @@ Il est nettement plus simple d'ajouter la fonction processRequest à la biblioth
 Cette étape a été réalisée comme dans le cours, et une procédure de test a été construite. Cependant, le débuggage n'a pas été fait par manque detemps (problème avec un getline). Normalement, peu de choses sont à modifier pour que cela soit correct.
 
 ## ETAPE 13
-Cette étape a été réalisée comme dans le cours, et une procédure de test a été construite. Cependant, le débuggage n'a pas été fait par manque de temps (problème avec un getline). Normalement, peu de choses sont à modifier pour que cela soit correct.
+Cette étape a été réalisée comme dans le cours, et une procédure de test a été construite. Cependant, le débuggage n'a pas été fait par manque de temps (problème avec la fonction getline). Normalement, peu de choses sont à modifier pour que cela soit correct.
 Dans les 3 cas suggérés par l'énoncé, des erreurs ont été levées. Pour le cas d'une suppression intempestive, une solution sans levée d'erreur ayant déjà été construite, l'erreur n'a été rajoutée que pour montrer ma compréhension du principe.
 
 ___
 
 ## Java Swing ETAPE 1
-Pas vraiment de commentaires... ça marche. Je n'ai plus beaucoup de temps car je pars au ski pendant les vacances et je n'aurai pas internet. Pour cette raison, je me suis contenté de faire en sorte de répondre aux attentes de l'énoncé de manière complète, masi sans contrainte de "style" ni "ergonomie".
+Pas vraiment de commentaires... ça marche. Je n'ai plus beaucoup de temps car je pars au ski pendant les vacances et je n'aurai pas internet. Pour cette raison, je me suis contenté de faire en sorte de répondre aux attentes de l'énoncé de manière complète, mais sans contrainte de "style" ni "ergonomie".
 J'ai oublié, je crois, de réaliser le bouton qui permet de quiter l'application. En fait il apparait dans le code, masi j'ai oublié de l'ajouter à un JPanel...
 
 ## Java Swing ETAPE 2
@@ -58,3 +59,11 @@ Je me suis aidé de ce [*tutoriel*](https://docs.oracle.com/javase/tutorial/uisw
 On peut quiter l'application via le menu. Mais j'ai laissé trainé le bouton qui permet de quitter l'application inutilement dans le code.
 
 ## Java Swing ETAPE 3
+Tout marche correctement. Essayez notamment d'utiliser la GUI java pour jouer l'image `landscape` et la video `whereiwent` (enfin là où je vais).
+Je n'ai pas pris le temps de faire une fonction de mise en pause... Mais j'ai pris en compte une éventuelle déconnexion du serveur, et quelques autres cas d'erreur. Il est également possible d'effacer la "console" de la remote-control.
+
+
+    En vous souhaitant une bonne journée,
+    Bien cordialement,
+
+    Benjamin LAZARD

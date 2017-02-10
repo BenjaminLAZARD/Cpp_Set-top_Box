@@ -72,7 +72,7 @@ shared_ptr<Picture> Library::createPicture(const string name, const string absol
     //Picture* temp = new Picture(name, absolute_path, width, height);
     shared_ptr<Picture> temp(new Picture(name, absolute_path, width, height));
     try {
-        find_medium_match(name);
+        find_medium_match(mediaobjects_table, name);
         mediaobjects_table[name] = temp;
     } catch (...) {
         cerr << name << "already exists" << endl;
@@ -85,7 +85,7 @@ shared_ptr<Video> Library::createVideo(const string name, const string absolute_
     //Video* temp = new Video(name, absolute_path, duration);
     shared_ptr<Video> temp(new Video(name, absolute_path, duration));
     try {
-        find_medium_match(name);
+        find_medium_match(mediaobjects_table, name);
         mediaobjects_table[name] = temp;
     } catch (...) {
         cerr << name << "already exists" << endl;
@@ -98,7 +98,7 @@ shared_ptr<Movie> Library::createMovie(const string name, const string absolute_
     //Movie* temp = new Movie(name, absolute_path, duration, markers, number_of_chapters);
     shared_ptr<Movie> temp(new Movie(name, absolute_path, duration, markers, number_of_chapters));
     try {
-        find_medium_match(name);
+        find_medium_match(mediaobjects_table, name);
         mediaobjects_table[name] = temp;
     } catch (...) {
         cerr << name << "already exists" << endl;
@@ -110,10 +110,10 @@ shared_ptr<Album> Library::createAlbum(string albumName){
     //Album* temp = new Album(albumName);
     shared_ptr<Album> temp(new Album(albumName));
     try {
-        find_album_match(name);
-        albums_table[name] = temp;
+        find_album_match(albums_table, albumName);
+        albums_table[albumName] = temp;
     } catch (...) {
-        cerr << name << "already exists" << endl;
+        cerr << albumName << "already exists" << endl;
     }
     return temp;
 }
@@ -126,13 +126,13 @@ void Library::searchByName(const string name, ostream &stream){
     if(mi == mediaobjects_table.end()){media = false;}
     if(ai == albums_table.end()){album = false;}
 
-    if (media) { stream<<"one medium was found    "   ;//<<endl;
+    if (media) { stream<< name << " was found. Further information: "   ;//<<endl;
         (mi->second)->printMediumData(stream);//print the appropriate media
     }
     if (album) { stream<<"one album was found    "   ;//<<endl;
         (ai->second)->print(stream); //print the appropriate media
     }
-    if(!media && !album){stream<<"this element could not be found"<<endl;}
+    if(!media && !album){stream<<"this element could not be found";}
 }
 
 void Library::playMedium(const string name, ostream &stream){
@@ -141,9 +141,9 @@ void Library::playMedium(const string name, ostream &stream){
     if(mi == mediaobjects_table.end()){media = false;}
 
     if (media) {
-        stream<<"one medium was found   " ;//<<endl;
+        stream<<  name << " which is of type" << typeid(*(mi->second)).name() << " now playing on the server";//<<endl;
         (mi->second)->play();}
-    else {stream<<"this element could not be found"<<endl;}
+    else {stream<<"this element could not be found";}
 }
 
 void Library::deleteMedium(const string name, ostream &stream){
@@ -157,7 +157,7 @@ void Library::deleteMedium(const string name, ostream &stream){
     }
     else{
         mediaobjects_table.erase(mi);
-        stream<<"this element was successfully deleted"<<endl;
+        stream<<"this element was successfully deleted";//endl
     }
     //it should then be distroyed entirely because of smartpointers
 }
@@ -168,10 +168,10 @@ void Library::deleteAlbum(const string name, ostream & stream){
     } catch (...) { } //nothing to do since this error was already handled before... It is just to show I can raise my own errors
 
     album_iterator ai = albums_table.find(name);
-    if (ai == albums_table.end()) { stream<<"medium was not found"<<endl;}
+    if (ai == albums_table.end()) { stream<<"medium was not found";}//endl;
     else {
         albums_table.erase(ai);
-        stream<<"this element was successfully deleted"<<endl;
+        stream<<"this element was successfully deleted";//endl
     }
     //it should then be distroyed entirely because of smartpointers
 }
@@ -218,45 +218,45 @@ bool Library::processRequest(TCPConnection& cnx, const string& request, string& 
 }
 
 bool Library::saveToFile(const string & fileName) const {
-    ostream file(fileName);
-    if( ! file){
-        cerr << "The file " << fileName << "could not be opened" << endl;
-        return false;
-    }
-    for(auto it : mediaobjects_table){ it->writeToFile(file);}
+//    ostream file(fileName);
+//    if( ! file){
+//        cerr << "The file " << fileName << "could not be opened" << endl;
+//        return false;
+//    }
+//    for(auto it : mediaobjects_table){ it->writeToFile(file);}
     return true;
 }
 
 bool Library::readFromFile(const string & fileName) const {
-    istream file(fileName);
-    if( ! file){
-        cerr << "The file " << fileName << "could not be opened" << endl;
-        return false;
-    }
+//    istream file(fileName);
+//    if( ! file){
+//        cerr << "The file " << fileName << "could not be opened" << endl;
+//        return false;
+//    }
 
-    while(file){
-        string medium_type = getline(file);
-        if(medium_type == "Mediaobject"){
-            moptr medium(new Media_object());
-        }
-        if(medium_type == "Picture"){
-            shared_ptr<Picture> medium(new Picture("name", "absolute_path", 0, 0));
-        }
-        if(medium_type == "Video"){
-            shared_ptr<Video> medium(new Video("name", "absolute_path", 0));
-        }
-        if(medium_type == "Movie"){
-            shared_ptr<Movie> medium(new Movie("name", "absolute_path", 0, NULL, 0));
-        }
+//    while(file){
+//        string medium_type = getline(file);
+//        if(medium_type == "Mediaobject"){
+//            moptr medium(new Media_object());
+//        }
+//        if(medium_type == "Picture"){
+//            shared_ptr<Picture> medium(new Picture("name", "absolute_path", 0, 0));
+//        }
+//        if(medium_type == "Video"){
+//            shared_ptr<Video> medium(new Video("name", "absolute_path", 0));
+//        }
+//        if(medium_type == "Movie"){
+//            shared_ptr<Movie> medium(new Movie("name", "absolute_path", 0, NULL, 0));
+//        }
 
-        medium->readFromFile(file);
-        if(file.fail()){
-            cerr << "The file " << fileName << "could not be read properly" << endl;
-            delete medium;
-            return false;
-        } else {
-            mediaobjects_table[medium.name] = medium;
-        }
-    }
+//        medium->readFromFile(file);
+//        if(file.fail()){
+//            cerr << "The file " << fileName << "could not be read properly" << endl;
+//            delete medium;
+//            return false;
+//        } else {
+//            mediaobjects_table[medium.name] = medium;
+//        }
+//    }
     return true;
 }

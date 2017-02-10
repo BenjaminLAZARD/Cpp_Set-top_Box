@@ -52,7 +52,7 @@ public:
 	 * calls Linux imagej reader to display the picture.
 	 */
 	virtual void play() const override{
-		string system_arg = "imagej " + absolute_path + " &";
+        string system_arg = "xdg-open " + absolute_path;
 		system(system_arg.c_str());
 	}
 
@@ -63,12 +63,12 @@ public:
         file << width << "\n" << height << "\n";
     }
 
-    virtual void readFromFile(ostream & file) const override{
+    virtual void readFromFile(ostream & file) override{
         Media_object::readFromFile(file);
         string temp;
-        getline(file, temp);
+        //getline(file, temp);
         width = stoi(temp);
-        getline(file, temp);
+        //getline(file, temp);
         height = stoi(temp);
     }
 };

@@ -44,7 +44,7 @@ public:
 	 * calls Linux mpv reader to play the video.
 	 */
 	virtual void play() const override{
-			string system_arg = "mpv " + absolute_path + " &";
+            string system_arg = "xdg-open " + absolute_path;
 			system(system_arg.c_str());
 		}
 
@@ -55,10 +55,10 @@ public:
         file << duration << "\n";
     }
 
-    virtual void readFromFile(ostream & file) const override{
+    virtual void readFromFile(ostream & file) override{
         Media_object::readFromFile(file);
         string temp;
-        getline(file, temp);
+        //getline(file, temp);
         duration = stoi(temp);
     }
 };

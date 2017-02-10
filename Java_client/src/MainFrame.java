@@ -20,7 +20,7 @@ public class MainFrame extends JFrame{
 	public MainFrame(){
 		super();
 		//set default parameters of the window
-		this.setTitle("BandMaster");
+		this.setTitle("Remote");
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//stop program when window is closed
@@ -35,6 +35,7 @@ public class MainFrame extends JFrame{
 		textArea.setSize(900, 100);
 		textArea.setLineWrap(true);
 		textArea.setText("Welcome to Benjamin LAZARD's fantastic GUI");
+		textArea.append("\n" + "Try playing : < landscape > or <  whereiwent  >");
 		//textArea.setFont(Font.truc);
 		
 		//Another one for the text area
@@ -61,6 +62,8 @@ public class MainFrame extends JFrame{
 		menu.add(action1); toolBar.add(action1);
 		My_Action action2 = new My_Action("Play a medium", My_Action.PLAY);
 		menu.add(action2); toolBar.add(action2);
+		My_Action action4 = new My_Action("Clear Screen", My_Action.CLEAR);
+		menu.add(action4); toolBar.add(action4);
 		My_Action action3 = new My_Action("Re-Connect", My_Action.CONNECT);
 		menu.add(action3); toolBar.add(action3);
 		
@@ -107,6 +110,7 @@ public class MainFrame extends JFrame{
 		private static final String SEARCH = "SEARCH$";
 		private static final String PLAY = "PLAY$";
 		private static final String CONNECT = "CONNECT";
+		private static final String CLEAR = "CLEAR";
 		private String action = "";
 		
 		private String title = "";
@@ -123,25 +127,29 @@ public class MainFrame extends JFrame{
 			switch (action) {
 				case SEARCH:
 					query_name = queryField.getText();
-					if (query_name == "" || query_name == null || remote == null) {
+					if (query_name == "" || query_name == null || query_name == " " || query_name.trim().isEmpty() || remote == null) {
 						textArea.append("\n"  + "Please enter a name in the field above and make sure you are connected, prior to any query");
 					}
 					else {
 						String response = remote.query(SEARCH + query_name);
+						if(response == null) {tryToConnect(); break;}
 						textArea.append("\n"  + response);
 					}
+					queryField.setText("");
 					break;
 					
 					
 				case PLAY:
 					query_name = queryField.getText();
-					if (query_name == "" || query_name == null || remote == null) {
+					if (query_name == "" || query_name == null || query_name == " " || query_name.trim().isEmpty() || remote == null) {
 						textArea.append("\n"  + "Please enter a name in the field above and make sure you are connected, prior to any query");
 					}
 					else {
 						String response = remote.query(PLAY + query_name);
+						if(response == null) {tryToConnect(); break;}
 						textArea.append("\n"  + response);
 					}
+					queryField.setText("");
 					break;
 					
 					
@@ -149,6 +157,11 @@ public class MainFrame extends JFrame{
 					if (remote == null) {tryToConnect();}
 					else {textArea.append("\n"  + "You are already connected");}					
 					break;
+					
+				case CLEAR:
+					textArea.setText("");					
+					break;
+					
 				default:
 					break;
 			}	
