@@ -10,13 +10,12 @@ import java.awt.event.*;
 
 public class MainFrame extends JFrame{
 
-	public static void main(String[] args){ MainFrame frame = new MainFrame();}
+	public static void main(String[] args){ new MainFrame();}
 	
 	private static final long serialVersionUID = 1L;
-	private final JButton button1 = new JButton("Yes");
-	private final JButton button2 = new JButton("No");
-	private final JButton button3 = new JButton("Stop app");
 	private final JTextArea textArea = new JTextArea();
+	private JTextField queryField = new JTextField(50);
+	private Remote remote = null;
 	
 	public MainFrame(){
 		super();
@@ -33,9 +32,6 @@ public class MainFrame extends JFrame{
 		
 		//One layout for the buttons
 		JPanel ButtonPanel = new JPanel();
-		ButtonPanel.add(button1);
-		ButtonPanel.add(button2);
-		ButtonPanel.add(textArea);
 		textArea.setSize(900, 100);
 		textArea.setLineWrap(true);
 		textArea.setText("Welcome to Benjamin LAZARD's fantastic GUI");
@@ -50,58 +46,10 @@ public class MainFrame extends JFrame{
 		
 		//Assembly
 		MainPanel.add(ButtonPanel, BorderLayout.CENTER);
-		MainPanel.add(pane, BorderLayout.SOUTH);
+		MainPanel.add(pane, BorderLayout.CENTER);
 		this.setContentPane(MainPanel);
 		this.setVisible(true);
 		
-		/**
-		 * set Listeners (anonymous embedded class)
-		 */
-		button1.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseReleased(MouseEvent arg0){}
-			@Override
-			public void mousePressed(MouseEvent arg0){}
-			@Override
-			public void mouseExited(MouseEvent arg0){}
-			@Override
-			public void mouseEntered(MouseEvent arg0){}
-			
-			@Override
-			public void mouseClicked(MouseEvent arg0){
-				textArea.append("\n" + button1.getText());
-			}
-		});
-		button2.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseReleased(MouseEvent arg0){}
-			@Override
-			public void mousePressed(MouseEvent arg0){}
-			@Override
-			public void mouseExited(MouseEvent arg0){}
-			@Override
-			public void mouseEntered(MouseEvent arg0){}
-			
-			@Override
-			public void mouseClicked(MouseEvent arg0){
-				textArea.append( "\n" + button2.getText());
-			}
-		});
-		button3.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseReleased(MouseEvent arg0){}
-			@Override
-			public void mousePressed(MouseEvent arg0){}
-			@Override
-			public void mouseExited(MouseEvent arg0){}
-			@Override
-			public void mouseEntered(MouseEvent arg0){}
-			
-			@Override
-			public void mouseClicked(MouseEvent arg0){
-				leave();
-			}
-		});
 		
 		//create menu
 		JMenuBar bar = new JMenuBar();
@@ -109,54 +57,105 @@ public class MainFrame extends JFrame{
 		menu.add(new QuitMenuItem(this));
 		
 		//create actions with same functions than above
-		My_Action action1 = new My_Action("Action 1 ", "Action1 just undertook");
-		//JMenuItem menuItem1 = new JMenuItem(action1);
-		menu.add(action1);
-		toolBar.add(action1);
+		My_Action action1 = new My_Action("Search (by medium/album name)", My_Action.SEARCH);
+		menu.add(action1); toolBar.add(action1);
+		My_Action action2 = new My_Action("Play a medium", My_Action.PLAY);
+		menu.add(action2); toolBar.add(action2);
+		My_Action action3 = new My_Action("Re-Connect", My_Action.CONNECT);
+		menu.add(action3); toolBar.add(action3);
 		
-		My_Action action2 = new My_Action("Action 2 ", "Action2 just undertook");
-		//JMenuItem menuItem2 = new JMenuItem(action2);
-		menu.add(action2);
-		toolBar.add(action2);
+		//Add a TextField
+		JLabel queryLabel = new JLabel("Please enter the name of a medium, then select an option from the toolbar");
+		ButtonPanel.add(queryLabel);
+		ButtonPanel.add(queryField);
 		
 		//add Menu
-		bar.add(menu);  bar.add(toolBar); //bar.add(menuItem1); bar.add(menuItem2);//handier
+		bar.add(menu);  bar.add(toolBar);
 		setJMenuBar(bar);
 		
-		
-		
 		this.setSize(900, 500);
+		
+		//create the client
+		this.tryToConnect();
 	}
 	
 	public final void leave(){
 		System.exit(1);
 	}
 	
+	public final void tryToConnect(){
+		try {
+	      remote = new Remote(Remote.DEFAULT_HOST, Remote.DEFAULT_PORT);
+	      System.out.println("Remote connected to set-top box at "+Remote.DEFAULT_HOST+":"+Remote.DEFAULT_PORT );
+	      textArea.append("\n"  + "Remote connected to set-top box at "+Remote.DEFAULT_HOST+":"+Remote.DEFAULT_PORT );
+	    }
+	    catch (Exception e1) {
+	      System.err.println("Remote couldn't connect to "+Remote.DEFAULT_HOST+":"+Remote.DEFAULT_PORT);
+	      textArea.append("\n"  + "Remote couldn't connect to "+Remote.DEFAULT_HOST+":"+Remote.DEFAULT_PORT);
+	    }
+	}
+	
 	/**
 	 * 
 	 * @author Benjamin
-	 * @brief an action that is equivalent to the button 1 in Step 1 of the Java Swing Project
+	 * @brief an action that behaves differently depending on its initialization
 	 * 
-	 * The asset of this technique is that it can be added several panels
+	 * The asset of this technique is clarity for the the code above
 	 */
 	class My_Action extends AbstractAction{
 		private static final long serialVersionUID = 1L;
-		private String title = "";
-		private String print = "";
+		private static final String SEARCH = "SEARCH$";
+		private static final String PLAY = "PLAY$";
+		private static final String CONNECT = "CONNECT";
+		private String action = "";
 		
-		public My_Action(String title, String print) {
+		private String title = "";
+		
+		public My_Action(String title, String action) {
 			super(title);//does not seem to work well
+			this.action = action;
 			this.title = title;
-			this.print = print;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e){
-			textArea.append("\n" + this.print);	
+			String query_name;
+			switch (action) {
+				case SEARCH:
+					query_name = queryField.getText();
+					if (query_name == "" || query_name == null || remote == null) {
+						textArea.append("\n"  + "Please enter a name in the field above and make sure you are connected, prior to any query");
+					}
+					else {
+						String response = remote.query(SEARCH + query_name);
+						textArea.append("\n"  + response);
+					}
+					break;
+					
+					
+				case PLAY:
+					query_name = queryField.getText();
+					if (query_name == "" || query_name == null || remote == null) {
+						textArea.append("\n"  + "Please enter a name in the field above and make sure you are connected, prior to any query");
+					}
+					else {
+						String response = remote.query(PLAY + query_name);
+						textArea.append("\n"  + response);
+					}
+					break;
+					
+					
+				case CONNECT:
+					if (remote == null) {tryToConnect();}
+					else {textArea.append("\n"  + "You are already connected");}					
+					break;
+				default:
+					break;
+			}	
 		}
 		
-		
 		public String getTitle(){return title;}
+		public String getAction(){return action;}
 	}
 
 }

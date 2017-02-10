@@ -1,5 +1,5 @@
 # TP de C++ set-top box
-**Address of the web-content : https://github.com/BenjaminLAZARD/inf224**
+**Address of the full content with _Version Control_ : https://github.com/BenjaminLAZARD/inf224**
 
 Pour visualiser ce fichier stylisé, il suffit de l'ouvrir dans Atom et d'utiliser le raccourci `ctrl + maj + m`. Eclipse ou un navigateur internet le permettent également.
 
@@ -51,6 +51,10 @@ ___
 
 ## Java Swing ETAPE 1
 Pas vraiment de commentaires... ça marche. Je n'ai plus beaucoup de temps car je pars au ski pendant les vacances et je n'aurai pas internet. Pour cette raison, je me suis contenté de faire en sorte de répondre aux attentes de l'énoncé de manière complète, masi sans contrainte de "style" ni "ergonomie".
+J'ai oublié, je crois, de réaliser le bouton qui permet de quiter l'application. En fait il apparait dans le code, masi j'ai oublié de l'ajouter à un JPanel...
 
 ## Java Swing ETAPE 2
 Je me suis aidé de ce [*tutoriel*](https://docs.oracle.com/javase/tutorial/uiswing/misc/action.html) pour comprendre comment implémenter les abstract actions.
+On peut quiter l'application via le menu. Mais j'ai laissé trainé le bouton qui permet de quitter l'application inutilement dans le code.
+
+## Java Swing ETAPE 3
