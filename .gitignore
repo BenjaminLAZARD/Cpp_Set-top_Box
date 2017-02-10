@@ -3,6 +3,8 @@
 *.project
 *.cproject
 *.prefs
+Java_client/*
+!Java_client/src
 depend-inf224_tp1
 ################################################################################
 #ignore the temporary files created during compilation
