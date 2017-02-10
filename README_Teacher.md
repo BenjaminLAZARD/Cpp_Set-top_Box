@@ -1,5 +1,8 @@
 # TP de C++ set-top box
 **Address of the web-content : https://github.com/BenjaminLAZARD/inf224**
+
+Pour visualiser ce fichier stylisé, il suffit de l'ouvrir dans Atom et d'utiliser le raccourci `ctrl + maj + m`. Eclipse ou un navigateur internet le permettent également.
+
 ## Etape 4
 + Une méthode dont l'implémentation n'a pas de sens au niveau de la classe de base est dite abstraite.
 On les déclare avec "=0" à la fin de la signature dans le header.
@@ -45,3 +48,9 @@ Cette étape a été réalisée comme dans le cours, et une procédure de test a
 Dans les 3 cas suggérés par l'énoncé, des erreurs ont été levées. Pour le cas d'une suppression intempestive, une solution sans levée d'erreur ayant déjà été construite, l'erreur n'a été rajoutée que pour montrer ma compréhension du principe.
 
 ___
+
+## Java Swing ETAPE 1
+Pas vraiment de commentaires... ça marche. Je n'ai plus beaucoup de temps car je pars au ski pendant les vacances et je n'aurai pas internet. Pour cette raison, je me suis contenté de faire en sorte de répondre aux attentes de l'énoncé de manière complète, masi sans contrainte de "style" ni "ergonomie".
+
+## Java Swing ETAPE 2
+Je me suis aidé de ce [*tutoriel*](https://docs.oracle.com/javase/tutorial/uiswing/misc/action.html) pour comprendre comment implémenter les abstract actions.

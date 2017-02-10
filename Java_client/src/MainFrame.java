@@ -4,6 +4,7 @@
  */
 
 import javax.swing.*;
+
 import java.awt.BorderLayout;
 import java.awt.event.*;
 
@@ -98,12 +99,64 @@ public class MainFrame extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent arg0){
-				System.exit(1);
+				leave();
 			}
 		});
+		
+		//create menu
+		JMenuBar bar = new JMenuBar();
+		JMenu menu = new JMenu("Menu"); JToolBar toolBar = new JToolBar("toolbar");
+		menu.add(new QuitMenuItem(this));
+		
+		//create actions with same functions than above
+		My_Action action1 = new My_Action("Action 1 ", "Action1 just undertook");
+		//JMenuItem menuItem1 = new JMenuItem(action1);
+		menu.add(action1);
+		toolBar.add(action1);
+		
+		My_Action action2 = new My_Action("Action 2 ", "Action2 just undertook");
+		//JMenuItem menuItem2 = new JMenuItem(action2);
+		menu.add(action2);
+		toolBar.add(action2);
+		
+		//add Menu
+		bar.add(menu);  bar.add(toolBar); //bar.add(menuItem1); bar.add(menuItem2);//handier
+		setJMenuBar(bar);
+		
+		
 		
 		this.setSize(900, 500);
 	}
 	
+	public final void leave(){
+		System.exit(1);
+	}
+	
+	/**
+	 * 
+	 * @author Benjamin
+	 * @brief an action that is equivalent to the button 1 in Step 1 of the Java Swing Project
+	 * 
+	 * The asset of this technique is that it can be added several panels
+	 */
+	class My_Action extends AbstractAction{
+		private static final long serialVersionUID = 1L;
+		private String title = "";
+		private String print = "";
+		
+		public My_Action(String title, String print) {
+			super(title);//does not seem to work well
+			this.title = title;
+			this.print = print;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e){
+			textArea.append("\n" + this.print);	
+		}
+		
+		
+		public String getTitle(){return title;}
+	}
 
 }
