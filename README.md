@@ -2,7 +2,7 @@
 INF224 course: programming paradigms 2016-2017.
 It is a home-made multimedia set-top box software, entirely in C++.
 
-Address of the web-content : https://github.com/BenjaminLAZARD/inf224
+Address of the web-content : [https://github.com/BenjaminLAZARD/Cpp_Set-top_Box](https://github.com/BenjaminLAZARD/Cpp_Set-top_Box)
 
 File destinated to the teacher : **README_Teacher.md**
 
